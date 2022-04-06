@@ -11,10 +11,10 @@ const pesquisarPoke = () =>{
     }
     Promise.all(pokemonPromises)
     .then(pokemons => {
-        const lisPokemons = pokemons.reduce((accumulator ,pokemon) => {
+        const lisPokemons = pokemons.reduce((acumulador ,pokemon) => {
 
             const types = pokemon.types.map(typeInfo => typeInfo.type.name)
-            accumulator += 
+            acumulador += 
             `<div class="card">
                 <div class ="img">
                 <img class ="card-image ${types[0]}" alt="${pokemon.name}" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" />
@@ -25,7 +25,7 @@ const pesquisarPoke = () =>{
                 </div>
                 
             </div>`
-            return accumulator
+            return acumulador
         }, '')
         const ul = document.querySelector('[data-js="pokedex"]')
        
