@@ -45,14 +45,14 @@ main{
 .card{
     display: flex;
     align-items: center;
-    background-color:cadetblue;
+    background-color:aquamarine;
     width: 397px;
     height: 153px;
     border-radius: 30px;
     box-shadow: none;
     transition: box-shadow 0.5s  0.2s ease-in;
-    transform: translateY(100px);
-    opacity: 0.2;
+    transform: translateY(80px);
+    opacity: 0.3;
     transition: 1.0s;
 }
 
