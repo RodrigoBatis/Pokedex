@@ -75,6 +75,7 @@ main{
     margin-left: 15px;
     border-radius: 30px;
 }
+
 .pokedex{ 
     display: flex;
     flex-direction: row;
