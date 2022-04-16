@@ -1,84 +1,85 @@
-'use strict'
+"use strict";
 
-const url =`https://pokeapi.co/api/v2/pokemon/`
+const url = `https://pokeapi.co/api/v2/pokemon/`;
 
-const pesquisarPoke = (id) =>{
+const getPokemon = async (id) => {
+  const getPokemonUrl = (id) => `${url + id}`;
 
-    const getPokemon = id => `${url + id}`
+  const response = await fetch(getPokemonUrl(id));
 
-    const response = fetch(getPokemon(id)).then(response => response.json())
+  const bodyJson = await response.json();
 
-    return response;
+  return bodyJson;
+};
+
+async function getAllPoke(qtd) {
+  const pokemonPromises = [];
+
+  for (let i = 1; i <= qtd; i++) {
+    const poke = await getPokemon(i);
+    pokemonPromises.push(poke);
+  }
+
+  return pokemonPromises;
+}
+
+async function filterPokemon() {
+  const qtddPoke = await getAllPoke(151)
+  const arrPoke = qtddPoke.map((element) => {
+
+    let pokemon = {
+        photo: element.sprites.front_default,
+        name: element.name,
+        id: element.id,
+        types: element.types.map(obj => {
+            return obj.type.name            
+        })
+    };
+
+    return pokemon
+  });
+
+  return arrPoke
+}
+
+
+async function  createCard() {
+    const container = document.querySelector(".container")
+    const arrayPokemons = await filterPokemon()  
+
+        const cards = arrayPokemons.map(pokemon =>{
+            const div = document.createElement("div")
+            div.className ="card"
+            const card = `
+            
+                <div class="img">
+                <img class="card-image" 
+                alt="${pokemon.name}" 
+                src="${pokemon.photo}" />
+                </div>        
+                <div class="atributos">
+                <h2 class="card-title">${pokemon.id}- ${pokemon.name}</h2>
+                <p class="card=subtitle">${pokemon.types.join(" | ")}</p>
+                </div>
     
-}
+            `
+            div.innerHTML = card
+            return div
+        })
 
-function getAllPoke() {
-    const pokemonPromises = []
-
-    for (let i =1; i<=151; i++){
-       
-        pokemonPromises.push( pesquisarPoke(i))
-    }
-
-    return pokemonPromises;
-}
-
-function getPromise(){
-   return Promise.all(getAllPoke())
-}
-
-async function filterPokemon(){
-    const arrayPromise = await getPromise()
-    console.log(arrayPromise)
-    const arrPoke = arrayPromise.map(element => {
-        let pokemon = {
-            photo: element.sprites.front_default,
-            name: element.name,
-            id: element.id,
-            type1: element.types[0].type.name,
-            type2: element.types[1].type.name
-        }
-         console.log(element)
-        // console.log(pokemon)
+    cards.forEach(element =>{
+        container.appendChild(element)
     })
 }
 
-function createCard() {
+createCard();
 
+function getInputValue(input){
+    return input.value
 }
 
-filterPokemon();
-
-
-
-// console.log(arrayPromise[0].sprites.front_default)
-    // console.log(arrayPromise[0].name)
-    // console.log(arrayPromise[0].id)
-    // console.log(arrayPromise[0].types[0].type.name)
-    // console.log(arrayPromise[0].types[1].type.name)
-
-
-
-
-//  Promise.all(pokemonPromises)
-//     .then(pokemons => {
-//         const lisPokemons = pokemons.reduce((acumulador ,pokemon) => {
-
-//             const types = pokemon.types.map(typeInfo => typeInfo.type.name)
-//             acumulador += 
-//             `<div class="card">
-//                 <div class ="img">
-//                 <img class ="card-image ${types[0]}" alt="${pokemon.name}" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.id}.png" />
-//                 </div>
-//                 <div class ="atributos">
-//                 <h2 class="card-title">${pokemon.id}. ${pokemon.name}</h2>
-//                 <p class="card=subtitle">${types.join(' | ')}</p>
-//                 </div>
-                
-//             </div>`
-//             return acumulador
-//         }, '')
-//         const ul = document.querySelector('[data-js="pokedex"]')
-       
-//         ul.innerHTML = lisPokemons
-//     })
+function pesquisarPokemon(){
+    const input = document.querySelector("#btnPesquisar")
+    const inputVal = getInputValue(input)
+    const container = document.querySelector(".container")
+}
