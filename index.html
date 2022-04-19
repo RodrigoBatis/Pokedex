@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <script src="js/main.js" defer ></script>
+    <script type="module" src="js/main.js" defer ></script>
     <title>Pokemon</title>
 </head>
 <body>
@@ -17,9 +17,8 @@
         <div class="pesquisar">
             <div class="form">
                 <form action="" autocomplete="on">
-                    <input type="search" name="inputName" value="" class="inputName" placeholder="pesquisar nome">
-                    <input type="number" name="inputId"   value="" class="inputId" placeholder="pesquisar id">
-                    <input type="submit" onclick="event.preventDefault()" id="btnPesquisar" value="Pesquisar">
+                    <input type="search" name="inputName" value="" class="inputName" placeholder="pesquisar por nome ou id" required>
+                    <input type="submit" id="btnPesquisar" value="Pesquisar">
                 </form>
             </div>
         </div>
